@@ -11,36 +11,38 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1a1a1a; /* Latar belakang gelap */
+            background-color: #2e2e2e; /* Latar belakang gelap */
             font-family: 'Courier New', Courier, monospace; /* Font robotik */
-            color: #00ff00; /* Warna hijau neon */
+            color: #ffffff; /* Warna teks putih */
             text-align: center;
         }
         h1 {
             margin-bottom: 20px;
             font-size: 2em;
+            color: #ffa500; /* Warna judul oranye */
         }
         input[type="time"] {
             padding: 10px;
             font-size: 16px;
-            border: 2px solid #00ff00;
+            border: 2px solid #ffa500;
             border-radius: 5px;
             margin-bottom: 20px;
-            background-color: #333; /* Latar belakang input */
-            color: #00ff00; /* Warna teks input */
+            background-color: #444; /* Latar belakang input */
+            color: #ffffff; /* Warna teks input */
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #00ff00;
+            background-color: #ffa500; /* Warna tombol oranye */
             color: black;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 5px;
         }
         button:hover {
-            background-color: #00cc00;
+            background-color: #ff8c00; /* Warna tombol saat hover */
         }
         .flash {
             width: 100px;
@@ -56,7 +58,10 @@
         .clock {
             font-size: 2em;
             margin-top: 20px;
-            color: #00ff00; /* Warna jam */
+            color: #ffffff; /* Warna jam */
+        }
+        .time-selection {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -64,13 +69,25 @@
     <h1>Pengaturan Alarm</h1>
     <label for="alarmTime">Set Alarm:</label>
     <input type="time" id="alarmTime">
+    <div class="time-selection">
+        <label for="timeOfDay">Pilih Siang/Malam:</label>
+        <select id="timeOfDay">
+            <option value="AM">Siang (AM)</option>
+            <option value="PM">Malam (PM)</option>
+        </select>
+    </div>
     <button id="setAlarm">Set Alarm</button>
+    <button id="stopAlarm">Stop Alarm</button>
     <div class="flash" id="flashLight"></div>
     <div class="clock" id="clockDisplay"></div>
     
     <audio id="whistleSound" src="https://github.com/bantuan2024/Image/blob/main/ssstik.io_%40sbobpants_1728535052334.mp3?raw=true"></audio>
 
     <script>
+        let alarmTimeout;
+        let flashInterval;
+        let isAlarmActive = false;
+
         // Menampilkan jam
         function updateClock() {
             const now = new Date();
@@ -91,17 +108,31 @@
 
         document.getElementById('setAlarm').addEventListener('click', function() {
             const alarmTime = document.getElementById('alarmTime').value;
+            const timeOfDay = document.getElementById('timeOfDay').value;
             if (alarmTime) {
                 localStorage.setItem('alarmTime', alarmTime);
-                alert('Alarm telah disetel untuk ' + alarmTime);
-                checkAlarm(alarmTime);
+                alert('Alarm telah disetel untuk ' + alarmTime + ' ' + timeOfDay);
+                checkAlarm(alarmTime, timeOfDay);
             }
         });
 
-        function checkAlarm(alarmTime) {
+        document.getElementById('stopAlarm').addEventListener('click', function() {
+            stopAlarm();
+        });
+
+        function checkAlarm(alarmTime, timeOfDay) {
             const now = new Date();
             const [hours, minutes] = alarmTime.split(':');
-            const alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+            let alarmHours = parseInt(hours);
+
+            // Mengatur waktu untuk siang/malam
+            if (timeOfDay === "PM" && alarmHours < 12) {
+                alarmHours += 12;
+            } else if (timeOfDay === "AM" && alarmHours === 12) {
+                alarmHours = 0;
+            }
+
+            const alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), alarmHours, minutes);
 
             // Mengatur alarm untuk keesokan harinya jika waktu sudah berlalu
             if (alarmDate <= now) {
@@ -109,22 +140,37 @@
             }
 
             const timeToAlarm = alarmDate.getTime() - now.getTime();
-            setTimeout(() => {
+            alarmTimeout = setTimeout(() => {
                 playAlarm();
             }, timeToAlarm);
         }
 
         function playAlarm() {
+            if (isAlarmActive) return; // Hindari memicu alarm lebih dari sekali
+            isAlarmActive = true;
+
             const utterance = new SpeechSynthesisUtterance('Alarm! Waktunya bangun!');
+            utterance.volume = 1; // Mengatur volume TTS menjadi maksimum
             window.speechSynthesis.speak(utterance);
             document.getElementById('flashLight').style.display = 'block'; // Menyalakan lampu flash
             document.getElementById('whistleSound').play(); // Memainkan suara peluit
 
             // Menyalakan efek flash
             const flashLight = document.getElementById('flashLight');
-            setInterval(() => {
+            flashInterval = setInterval(() => {
                 flashLight.style.display = flashLight.style.display === 'none' ? 'block' : 'none';
             }, 500); // Mengubah tampilan flash setiap 500ms
+        }
+
+        function stopAlarm() {
+            clearTimeout(alarmTimeout);
+            clearInterval(flashInterval);
+            isAlarmActive = false;
+            document.getElementById('flashLight').style.display = 'none'; // Mematikan lampu flash
+            window.speechSynthesis.cancel(); // Menghentikan suara TTS
+            document.getElementById('whistleSound').pause(); // Menghentikan suara peluit
+            document.getElementById('whistleSound').currentTime = 0; // Reset suara peluit
+            alert('Alarm dihentikan!');
         }
     </script>
 </body>
