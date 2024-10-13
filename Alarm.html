@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Alarm</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1a1a1a; /* Latar belakang gelap */
+            font-family: 'Courier New', Courier, monospace; /* Font robotik */
+            color: #00ff00; /* Warna hijau neon */
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        input[type="time"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: #333; /* Latar belakang input */
+            color: #00ff00; /* Warna teks input */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #00ff00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00cc00;
+        }
+        .flash {
+            width: 100px;
+            height: 100px;
+            background-color: transparent; /* Flash tanpa warna */
+            display: none; /* Mulai dengan tidak terlihat */
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #ffffff; /* Efek lampu blitz */
+        }
+        .clock {
+            font-size: 2em;
+            margin-top: 20px;
+            color: #00ff00; /* Warna jam */
+        }
+    </style>
+</head>
+<body>
+    <h1>Pengaturan Alarm</h1>
+    <label for="alarmTime">Set Alarm:</label>
+    <input type="time" id="alarmTime">
+    <button id="setAlarm">Set Alarm</button>
+    <div class="flash" id="flashLight"></div>
+    <div class="clock" id="clockDisplay"></div>
+    
+    <audio id="whistleSound" src="https://github.com/bantuan2024/Image/blob/main/ssstik.io_%40sbobpants_1728535052334.mp3?raw=true"></audio>
+
+    <script>
+        // Menampilkan jam
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('clockDisplay').textContent = timeString;
+        }
+        setInterval(updateClock, 1000); // Memperbarui jam setiap detik
+        updateClock(); // Memanggil fungsi sekali untuk menampilkan jam awal
+
+        // Memuat alarm dari localStorage
+        window.onload = function() {
+            const savedAlarm = localStorage.getItem('alarmTime');
+            if (savedAlarm) {
+                document.getElementById('alarmTime').value = savedAlarm;
+                checkAlarm(savedAlarm);
+            }
+        };
+
+        document.getElementById('setAlarm').addEventListener('click', function() {
+            const alarmTime = document.getElementById('alarmTime').value;
+            if (alarmTime) {
+                localStorage.setItem('alarmTime', alarmTime);
+                alert('Alarm telah disetel untuk ' + alarmTime);
+                checkAlarm(alarmTime);
+            }
+        });
+
+        function checkAlarm(alarmTime) {
+            const now = new Date();
+            const [hours, minutes] = alarmTime.split(':');
+            const alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+
+            // Mengatur alarm untuk keesokan harinya jika waktu sudah berlalu
+            if (alarmDate <= now) {
+                alarmDate.setDate(alarmDate.getDate() + 1);
+            }
+
+            const timeToAlarm = alarmDate.getTime() - now.getTime();
+            setTimeout(() => {
+                playAlarm();
+            }, timeToAlarm);
+        }
+
+        function playAlarm() {
+            const utterance = new SpeechSynthesisUtterance('Alarm! Waktunya bangun!');
+            window.speechSynthesis.speak(utterance);
+            document.getElementById('flashLight').style.display = 'block'; // Menyalakan lampu flash
+            document.getElementById('whistleSound').play(); // Memainkan suara peluit
+
+            // Menyalakan efek flash
+            const flashLight = document.getElementById('flashLight');
+            setInterval(() => {
+                flashLight.style.display = flashLight.style.display === 'none' ? 'block' : 'none';
+            }, 500); // Mengubah tampilan flash setiap 500ms
+        }
+    </script>
+</body>
+</html>
