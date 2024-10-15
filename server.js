@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const axios = require('axios'); // Tambahkan axios untuk HTTP request
 const app = express();
-const port = 3000;
+const port = 2626;
 
 // Ganti dengan token bot Telegram milikmu
 const botToken = '7207871141:AAGQHPInZWuoHSJzHr5s-kZQr4pM63fizPs';
